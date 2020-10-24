@@ -21,8 +21,8 @@ public class Test {
         InputStream inputStream = Resources.getResourceAsStream("mybatis.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        UMapper mapper = sqlSession.getMapper(UMapper.class);
-        List<User> user = mapper.selectByName("zhangsan");
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List<User> user = mapper.selectById(1);
         sqlSession.commit();
         sqlSession.flushStatements();
         sqlSession.close();

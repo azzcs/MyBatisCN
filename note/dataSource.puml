@@ -1,0 +1,24 @@
+#
+@startuml
+SqlSessionFactoryBuilder -> SqlSessionFactoryBuilder:build
+SqlSessionFactoryBuilder -> XMLConfigBuilder:new
+
+XMLConfigBuilder -> Configuration:super(new)
+XMLConfigBuilder <- Configuration
+
+XMLConfigBuilder -> XMLConfigBuilder:parse
+XMLConfigBuilder -> XMLConfigBuilder:parseConfiguration
+XMLConfigBuilder -> XMLConfigBuilder:environmentsElement
+
+XMLConfigBuilder -> DataSourceFactory:dataSourceElement
+DataSourceFactory -> DataSource:getDataSource
+XMLConfigBuilder <- DataSource
+XMLConfigBuilder -> Environment.Builder:new( dataSource)
+Environment.Builder ->Environment:builder
+Configuration <- Environment
+
+Configuration -> Configuration:setEnvironment( environment)
+
+XMLConfigBuilder <- Configuration
+SqlSessionFactoryBuilder <- XMLConfigBuilder
+@enduml

@@ -23,6 +23,6 @@
 2、当执行需要代理的接口的方法时，会执行MapperProxy对象的invoke方法。
 
 3、MapperProxy对象的invoke方法中包含Map<Method, MapperMethod> methodCache,
-通过Method获取到对应的MapperMethod（如果获取不到就会创建，懒加载模式）。
+通过Method获取到对应的MapperMethod
 
 4、执行MapperMethod的execute方法。
