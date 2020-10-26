@@ -9,6 +9,10 @@
         <property name="db.username" value="root"/>
         <property name="db.password" value="azzcs"/>
     </properties>
+    
+    <plugins>
+        <plugin interceptor="test.plugin.ExamplePlugin" />
+    </plugins>
     <environments default="development">
         <environment id="development">
 

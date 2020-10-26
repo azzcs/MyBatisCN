@@ -3,7 +3,13 @@
 
 <mapper namespace="test.UserMapper">
 
-    <select id="selectById" resultType="test.User">
-        SELECT * FROM user where id = #{id}
+    <select id="selectById" resultType="test.User" >
+        SELECT * FROM user
+        <if test="id != null">
+        where  id = #{id}
+           <if test="id != null">
+               AND 1=1
+           </if>
+        </if>
     </select>
 </mapper>
