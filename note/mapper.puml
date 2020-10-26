@@ -1,0 +1,43 @@
+# mapper加载过程，mapper可以配置package、resource、url、class加载。以下为resource的加载过程
+@startuml
+SqlSessionFactoryBuilder -> SqlSessionFactoryBuilder:build
+SqlSessionFactoryBuilder -> XMLConfigBuilder:new
+
+XMLConfigBuilder -> Configuration:super(new)
+XMLConfigBuilder <- Configuration
+
+XMLConfigBuilder -> XMLConfigBuilder:parse
+XMLConfigBuilder -> XMLConfigBuilder:parseConfiguration
+XMLConfigBuilder -> XMLConfigBuilder:mapperElement
+
+XMLConfigBuilder -> XMLMapperBuilder:new
+
+XMLMapperBuilder -> MapperBuilderAssistant:new
+XMLMapperBuilder <- MapperBuilderAssistant
+
+XMLMapperBuilder -> XMLMapperBuilder:parse
+XMLMapperBuilder -> XMLMapperBuilder:configurationElement
+XMLMapperBuilder -> XMLMapperBuilder:buildStatementFromContext
+
+XMLMapperBuilder -> XMLStatementBuilder:new(builderAssistant)
+XMLStatementBuilder -> XMLStatementBuilder:parseStatementNode
+XMLStatementBuilder -> LanguageDriver:getLanguageDriver
+LanguageDriver -> LanguageDriver:createSqlSource
+LanguageDriver -> XMLScriptBuilder:new
+XMLScriptBuilder -> XMLScriptBuilder:parseScriptNode
+XMLScriptBuilder -> MixedSqlNode:parseDynamicTags
+XMLScriptBuilder <- MixedSqlNode
+XMLScriptBuilder -> DynamicSqlSource:new
+
+XMLScriptBuilder <- DynamicSqlSource
+LanguageDriver <- XMLScriptBuilder
+XMLStatementBuilder <- LanguageDriver
+
+MapperBuilderAssistant <- LanguageDriver
+MapperBuilderAssistant -> MapperBuilderAssistant:addMappedStatement(sqlSource)
+MapperBuilderAssistant -> XMLStatementBuilder
+
+XMLMapperBuilder <- XMLStatementBuilder
+XMLConfigBuilder <- XMLMapperBuilder
+SqlSessionFactoryBuilder <- XMLConfigBuilder
+@enduml
